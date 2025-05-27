@@ -1,0 +1,173 @@
+<div id="userModal" class="modal">
+    <div class="modal-content">
+        <div class="flex justify-between items-center mb-6">
+            <h2 id="userModalTitle" class="text-xl font-semibold">Create User</h2>
+            <button onclick="closeModal('userModal')" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+        </div>
+        <form id="userForm">
+            <input type="hidden" id="userId" name="userId">
+            <div class="form-grid">
+                <div>
+                    <label for="userName" class="block text-sm font-medium text-gray-700">Name</label>
+                    <input type="text" id="userName" name="userName" class="input-field" required>
+                </div>
+                <div>
+                    <label for="userEmail" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" id="userEmail" name="userEmail" class="input-field" required>
+                </div>
+            </div>
+            <div class="form-grid mt-4">
+                <div>
+                    <label for="userRole" class="block text-sm font-medium text-gray-700">Role</label>
+                    <select id="userRole" name="userRole" class="select-field" required onchange="toggleStudentFields()">
+                        <option value="student">Student</option>
+                        <option value="supervisor">Supervisor</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="userPassword" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" id="userPassword" name="userPassword" class="input-field" placeholder="Leave blank if not changing">
+                </div>
+            </div>
+            <div id="studentSpecificFields" class="form-grid mt-4" style="display: none;">
+                <div>
+                    <label for="userRoll" class="block text-sm font-medium text-gray-700">Roll Number</label>
+                    <input type="text" id="userRoll" name="userRoll" class="input-field">
+                </div>
+                <div>
+                    <label for="userSemester" class="block text-sm font-medium text-gray-700">Semester</label>
+                    <select id="userSemester" name="userSemester" class="select-field">
+                        </select>
+                </div>
+            </div>
+            <div class="mt-6 flex justify-end space-x-3">
+                <button type="button" onclick="closeModal('userModal')" class="btn btn-secondary">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save User</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="projectModal" class="modal">
+    <div class="modal-content">
+        <div class="flex justify-between items-center mb-6">
+            <h2 id="projectModalTitle" class="text-xl font-semibold">Create Project</h2>
+            <button onclick="closeModal('projectModal')" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+        </div>
+        <form id="projectForm">
+            <input type="hidden" id="projectId" name="projectId">
+            <div>
+                <label for="projectTitle" class="block text-sm font-medium text-gray-700">Project Title</label>
+                <input type="text" id="projectTitle" name="projectTitle" class="input-field" required>
+            </div>
+            <div>
+                <label for="projectDescription" class="block text-sm font-medium text-gray-700">Description</label>
+                <textarea id="projectDescription" name="projectDescription" rows="3" class="input-field" required></textarea>
+            </div>
+            <div class="form-grid mt-4">
+                <div>
+                    <label for="projectSupervisor" class="block text-sm font-medium text-gray-700">Assign Supervisor</label>
+                    <select id="projectSupervisor" name="projectSupervisor" class="select-field" required>
+                         <option value="">Select Supervisor</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="projectSemester" class="block text-sm font-medium text-gray-700">Semester</label>
+                    <select id="projectSemester" name="projectSemester" class="select-field">
+                         </select>
+                </div>
+            </div>
+            <div class="mt-6 flex justify-end space-x-3">
+                <button type="button" onclick="closeModal('projectModal')" class="btn btn-secondary">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save Project</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="noticeModal" class="modal">
+    <div class="modal-content">
+        <div class="flex justify-between items-center mb-6">
+            <h2 id="noticeModalTitle" class="text-xl font-semibold">Post Notice</h2>
+            <button onclick="closeModal('noticeModal')" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+        </div>
+        <form id="noticeForm">
+            <input type="hidden" id="noticeId" name="noticeId">
+            <div>
+                <label for="noticeTitle" class="block text-sm font-medium text-gray-700">Notice Title</label>
+                <input type="text" id="noticeTitle" name="noticeTitle" class="input-field" required>
+            </div>
+            <div>
+                <label for="noticeContent" class="block text-sm font-medium text-gray-700">Content</label>
+                <textarea id="noticeContent" name="noticeContent" rows="3" class="input-field" required></textarea>
+            </div>
+            <div class="form-grid mt-4">
+                <div>
+                    <label for="noticeAudienceType" class="block text-sm font-medium text-gray-700">Audience Type</label>
+                    <select id="noticeAudienceType" name="noticeAudienceType" class="select-field" required onchange="updateNoticeTargetOptions()">
+                        <option value="all">Everyone (All Users)</option>
+                        <option value="all_students">All Students</option>
+                        <option value="all_supervisors">All Supervisors</option>
+                        <option value="specific_student">Specific Student</option>
+                        <option value="specific_supervisor">Specific Supervisor</option>
+                        <option value="specific_project">Specific Project/Team</option>
+                        <option value="specific_semester_students">Students in Semester</option>
+                    </select>
+                </div>
+                <div id="noticeSpecificTargetContainer" style="display: none;">
+                    <label for="noticeSpecificTarget" id="noticeSpecificTargetLabel" class="block text-sm font-medium text-gray-700">Select Target</label>
+                    <input type="text" id="noticeStudentFilter" class="input-field mb-2" placeholder="Filter students by name/roll..." style="display:none;">
+                    <select id="noticeSpecificTarget" name="noticeSpecificTarget" class="select-field">
+                        </select>
+                </div>
+            </div>
+            <div class="mt-6 flex justify-end space-x-3">
+                <button type="button" onclick="closeModal('noticeModal')" class="btn btn-secondary">Cancel</button>
+                <button type="submit" class="btn btn-primary">Post Notice</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="assignTeamModal" class="modal">
+    <div class="modal-content">
+        <div class="flex justify-between items-center mb-6">
+            <h2 id="assignTeamModalTitle" class="text-xl font-semibold">Manage Project Team</h2>
+            <button onclick="closeModal('assignTeamModal')" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+        </div>
+        <form id="assignTeamForm">
+            <input type="hidden" id="assignTeamProjectId" name="assignTeamProjectId">
+
+            <div class="mb-4">
+                <h3 class="text-md font-semibold text-gray-700 mb-2">Current Team Members:</h3>
+                <div id="currentTeamMembersList" class="max-h-40 overflow-y-auto border rounded-md p-2 bg-gray-50">
+                    </div>
+            </div>
+
+            <div class="mb-4">
+                <h3 class="text-md font-semibold text-gray-700 mb-2">Available Students (Same Semester, Unassigned):</h3>
+                <div id="availableStudentsList" class="max-h-40 overflow-y-auto border rounded-md p-2 bg-gray-50">
+                    </div>
+            </div>
+
+            <div class="mt-6 flex justify-end space-x-3">
+                <button type="button" onclick="closeModal('assignTeamModal')" class="btn btn-secondary">Close</button>
+                </div>
+        </form>
+    </div>
+</div>
+
+
+<div id="messageModal" class="modal">
+    <div class="modal-content" style="max-width: 400px;">
+        <div class="flex justify-between items-center mb-4">
+            <h2 id="messageModalTitle" class="text-xl font-semibold">Notification</h2>
+            <button onclick="closeModal('messageModal')" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+        </div>
+        <p id="messageModalText" class="text-gray-700 mb-6"></p>
+        <div class="flex justify-end">
+            <button type="button" onclick="closeModal('messageModal')" class="btn btn-primary">OK</button>
+        </div>
+    </div>
+</div>
