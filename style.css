@@ -1,0 +1,162 @@
+/* Custom CSS for Project Pilot - style.css */
+
+/* Base Body Styles - Tailwind's font-inter handles the font now */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f0f2f5; /* Light gray background */
+    display: flex; /* This is crucial for the main-container to work as flex item */
+    flex-direction: column; /* Stacks main-container and footer vertically */
+    min-height: 100vh;
+}
+.main-container {
+    display: flex;
+    flex-grow: 1; /* Allows main-container to take up remaining vertical space */
+    overflow: hidden; /* Prevents double scrollbars if sidebar/main content overflow */
+}
+.sidebar-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+.bento-box {
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+.bento-box:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+    align-items: center; /* Center modal vertically */
+    justify-content: center; /* Center modal horizontally */
+}
+.modal-content {
+    background-color: #fff;
+    /* margin: 8% auto; */ /* Replaced by flex centering in .modal */
+    padding: 24px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px; /* Increased width for team management */
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    animation: fadeInScale 0.3s ease-out forwards;
+}
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+.btn {
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+}
+.btn-primary {
+    background-color: #2563eb;
+    color: white;
+}
+.btn-primary:hover {
+    background-color: #1d4ed8;
+}
+.btn-secondary {
+    background-color: #e5e7eb;
+    color: #374151;
+}
+.btn-secondary:hover {
+    background-color: #d1d5db;
+}
+.btn-danger {
+    background-color: #ef4444; /* red-500 */
+    color: white;
+}
+.btn-danger:hover {
+    background-color: #dc2626; /* red-600 */
+}
+.input-field, .select-field {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    margin-top: 4px;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+}
+.input-field:focus, .select-field:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #f0f2f5;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+footer {
+    background-color: #1f2937; /* Tailwind gray-800 */
+    color: #d1d5db; /* Tailwind gray-300 */
+    text-align: center;
+    padding: 15px 0;
+    font-size: 0.875rem;
+    margin-top: auto; /* Pushes footer to bottom */
+}
+footer a {
+    color: #93c5fd; /* Tailwind blue-300 */
+    text-decoration: none;
+}
+footer a:hover {
+    text-decoration: underline;
+}
+.list-item-action {
+    margin-left: auto;
+    display: flex;
+    gap: 8px;
+}
+.list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+.list-item:last-child {
+    border-bottom: none;
+}
+/* Specific styles for sidebar active link */
+#sidebarNav a.bg-blue-100 {
+    background-color: #ebf8ff; /* bg-blue-100 */
+    color: #2b6cb0; /* text-blue-600 */
+    font-weight: 600; /* font-semibold */
+}

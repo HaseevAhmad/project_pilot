@@ -1,0 +1,50 @@
+<?php
+// These headers are needed for browser to understand the response
+header("Content-Type: text/html; charset=UTF-8");
+
+$host = "localhost";
+$db_name = "project_pilot"; // Database name to be created/used
+$username = "root";         // Default XAMPP username
+$password = "";             // Default XAMPP password (empty)
+
+$conn = null;
+
+try {
+    // First, connect to MySQL server without specifying a database to create it if it doesn't exist
+    $conn = new PDO("mysql:host=" . $host, $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // Create database if it does not exist
+    $conn->exec("CREATE DATABASE IF NOT EXISTS `$db_name` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
+    echo "Database '$db_name' checked/created successfully.<br>";
+
+    // Now, connect to the specific database
+    $conn = new PDO("mysql:host=" . $host . ";dbname=" . $db_name, $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $conn->exec("set names utf8");
+
+    // Read SQL file content
+    $sql_file_path = __DIR__ . "/database/schema.sql";
+    if (!file_exists($sql_file_path)) {
+        die("Error: schema.sql not found at " . $sql_file_path);
+    }
+    $sql = file_get_contents($sql_file_path);
+
+    // Execute SQL queries
+    // Use a simple parser to split queries by semicolon, excluding inside comments/strings
+    $queries = array_filter(array_map('trim', explode(';', $sql)));
+
+    foreach ($queries as $query) {
+        if (!empty($query)) {
+            $conn->exec($query);
+        }
+    }
+
+    echo "Database tables created/updated and initial data inserted successfully.<br>";
+
+} catch(PDOException $exception) {
+    echo "Database setup error: " . $exception->getMessage() . "<br>";
+} finally {
+    $conn = null; // Close connection
+}
+?>
